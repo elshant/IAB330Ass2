@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setViews();
         onLoginButtonClicked();
     }
-
+/* Testing */
     private void onLoginButtonClicked(){
         btnLogin.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
