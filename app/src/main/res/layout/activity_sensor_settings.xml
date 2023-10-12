@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Sensors"
+        android:textSize="50sp"
+        android:textColor="#474BFF"
+        android:textStyle="bold"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        >
+        <Switch
+            android:id="@+id/airPressureEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Air pressure Sensor"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensitivity"
+            android:layout_marginTop="10dp"/>
+        <SeekBar
+            android:id="@+id/airPressureSensitivity"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="20dp">
+        <Switch
+            android:id="@+id/temperatureEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature Sensor"
+            android:textSize="30sp" />
+        <Switch
+            android:id="@+id/tempFahrenheitEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Fahrenheit" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="20dp">
+        <Switch
+            android:id="@+id/humidityEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity Sensor"
+            android:textSize="30sp" />
+        <Switch
+            android:id="@+id/humidFahrenheitEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Fahrenheit" />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#373D3F"
+        >
+
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
+            android:background="@drawable/home"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="17dp" />
+
+        <ImageButton
+            android:id="@+id/alertBtn"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
+            android:background="@drawable/alert"
+            android:layout_marginLeft="185dp"
+            android:layout_marginTop="17dp" />
+        <ImageButton
+            android:id="@+id/settingsBtn"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
+            android:background="@drawable/settingsselected"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="17dp" />
+    </FrameLayout>
+</LinearLayout>
