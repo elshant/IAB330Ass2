@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-public class AlertActivity extends AppCompatActivity {
+public class AlertActivity extends AppCompatActivity{
     private ImageButton btnHome;
     private ImageButton btnAlert;
     private ImageButton btnSetting;
