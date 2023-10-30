@@ -14,19 +14,17 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-//import com.iab330.weatheralert.DB.sensor.AccelerometerDao;
-//import com.iab330.weatheralert.DB.sensor.AccelerometerData;
 import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
-import com.iab330.weatheralert.Utils.MyApp;
 
 import java.util.Arrays;
 
 public class SensorService extends Service implements SensorEventListener {
 
     private SensorManager sensorManager;
-    private Sensor tempSensor = null;
-    private Sensor humiditySensor = null;
+    public static Sensor tempSensor = null;
+    public static Sensor humiditySensor = null;
+    public static Sensor airSensor = null;
 
     @Override
     public void onCreate() {
@@ -50,19 +48,29 @@ public class SensorService extends Service implements SensorEventListener {
             Toast.makeText(this, "Device does not have Humidity Sensor", Toast.LENGTH_SHORT).show();
         }
 
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) != null){
+            airSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        }
+        else {
+            Toast.makeText(this, "Device does not have Air pressure Sensor", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (tempSensor != null){
-            sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
+//        if (tempSensor != null){
+//            sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
+////            SharedPrefManager.setTempSensor(true);
+//        }
 
-        if (humiditySensor != null){
-            sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
+//        if (humiditySensor != null){
+//            sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
+//        }
 
+//        if (airSensor != null) {
+//            sensorManager.registerListener(this, airSensor, SensorManager.SENSOR_DELAY_NORMAL);
+//        }
         return START_STICKY;
     }
 
@@ -92,10 +100,10 @@ public class SensorService extends Service implements SensorEventListener {
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
 
             // Save data into database
-            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-            AsyncTask.execute(()->{
-                temperatureDao.insertTemperature(temperatureData);
-            });
+//            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
+//            AsyncTask.execute(()->{
+//                temperatureDao.insertTemperature(temperatureData);
+//            });
 
         }
 
@@ -119,7 +127,7 @@ public class SensorService extends Service implements SensorEventListener {
             //});
 
             // Send data to the activity
-            Intent broadcastIntent = new Intent("VEHICLE_SENSOR_DATA");
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA");
             //broadcastIntent.putExtra("accelerometerData", accelerometerData);
             sendBroadcast(broadcastIntent);
 

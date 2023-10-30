@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
+
 public class AlertActivity extends AppCompatActivity{
     private ImageButton btnHome;
     private ImageButton btnAlert;
     private ImageButton btnSetting;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,8 @@ public class AlertActivity extends AppCompatActivity{
         handleSettingClick();
         handleHomeClick();
     }
+
+
 
     private void handleHomeClick(){
         btnHome.setOnClickListener(view -> {

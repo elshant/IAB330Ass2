@@ -13,7 +13,7 @@ public class MyApp extends Application {
     private static SharedPreferences preferences;
 
     private static AppDatabase appDatabase;
-    private static String DATABASE_NAME = "FLEETLY_DATABASE";
+    private static String DATABASE_NAME = "WEATHER_ALERT_DATABASE";
 
     @Override
     public void onCreate() {
