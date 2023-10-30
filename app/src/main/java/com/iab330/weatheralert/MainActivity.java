@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,12 +17,14 @@ import android.widget.TextView;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+import java.util.Calendar;
+import java.util.Objects;
+
+public class MainActivity extends AppCompatActivity {
 
     ImageButton btnHome;
     ImageButton btnAlert;
     ImageButton btnSetting;
-    TextView dataLink;
     Intent service;
     SensorDataReceiver dataReceiver;
     LinearLayout mainLayout;

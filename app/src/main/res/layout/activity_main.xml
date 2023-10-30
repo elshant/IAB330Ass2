@@ -2,82 +2,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:background="@drawable/background_1"
+    android:orientation="vertical">
 
+    <!--    @drawable/timo_wagner_ft6_ykb0nfg_unsplash-->
 
     <TextView
+        android:id="@+id/homeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-22dp"
+        android:includeFontPadding="false"
+        android:lineHeight="1dp"
         android:padding="20dp"
         android:text="Home"
-        android:textSize="50sp"
         android:textColor="#474BFF"
-        android:textStyle="bold"
-        />
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
     <LinearLayout
+        android:id="@+id/conditionsDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp">
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/timeOfDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Time of Day">
-        </TextView>
+            android:layout_marginEnd="7dp"
+            android:text="Time of Day"
+            android:textSize="23sp"
+            android:textStyle="bold"></TextView>
+
         <TextView
             android:id="@+id/weatherCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weather condition"/>
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:text="Weather condition" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sensorDataDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp">
+        android:orientation="horizontal">
+
         <ImageView
             android:layout_width="13dp"
             android:layout_height="30dp"
-            android:background="@drawable/tempdark">
-        </ImageView>
+            android:background="@drawable/tempdark"></ImageView>
+
         <TextView
             android:id="@+id/temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Temp">
-        </TextView>
+            android:text="Temp"></TextView>
+
         <ImageView
             android:layout_width="23dp"
             android:layout_height="30dp"
-            android:background="@drawable/humiditydark"/>
+            android:background="@drawable/humiditydark" />
+
         <TextView
             android:id="@+id/humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity"/>
+            android:text="Humidity" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/detailsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="See more..."
-        android:textStyle="bold"
-        android:textColor="#474BFF"
-        android:clickable="true"
-        android:layout_marginLeft="20dp"
-        />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="480dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="525dp"
         android:background="#373D3F">
 
         <ImageButton
