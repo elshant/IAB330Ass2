@@ -6,24 +6,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     ImageButton btnHome;
     ImageButton btnAlert;
     ImageButton btnSetting;
     TextView dataLink;
-    Intent serviceIntent;
-    SensorDatReceiver dataReceiver;
-
+    Intent service;
+    SensorDataReceiver dataReceiver;
+    SensorManager sensorManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +36,48 @@ public class MainActivity extends AppCompatActivity {
         handleSettingClick();
         handleHomeClick();
         handleDataClick();
-        manageSensorData();
+        manageSensorService();
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    private class SensorDataReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA")){
+                // Receive the sensor data
+
+                TemperatureData temperatureData = (TemperatureData)
+                        intent.getSerializableExtra("temperatureData");
+
+            }
+        }
+    }
+    private void manageSensorService(){
+        service = new Intent(this, SensorService.class);
+        startService(service);
+
+        dataReceiver = new SensorDataReceiver();
+        IntentFilter filter = new IntentFilter("WEATHER_SENSOR_DATA");
+        registerReceiver(dataReceiver, filter);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        if (dataReceiver != null){
+            unregisterReceiver(dataReceiver);
+        }
+    }
+
+
 
     private void handleDataClick(){
         dataLink.setOnClickListener(view -> {
@@ -67,52 +109,5 @@ public class MainActivity extends AppCompatActivity {
         btnSetting = findViewById(R.id.settingsBtn);
         btnAlert = findViewById(R.id.alertBtn);
         dataLink = findViewById(R.id.detailsText);
-    }
-
-    private void manageSensorData() {
-
-        Log.d("OnCreateTesting", "Manage Sensor Data Running ----------------");
-
-        serviceIntent = new Intent(this, SensorService.class);
-        startService(serviceIntent);
-
-//        dataReceiver = new SensorDatReceiver();
-//        IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA");
-//        registerReceiver(dataReceiver, filter);
-
-    }
-
-    private class SensorDatReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() != null && intent.getAction().equals("VEHICLE_SENSOR_DATA")) {
-                // Receive the sensor data and update the UI if required.
-                Log.d("OnCreateTesting", "Manage Sensor Data Running - data received and not null ----------------");
-                TemperatureData tempData = (TemperatureData)
-                        intent.getSerializableExtra("tempData");
-                // Making changes in the UI based on sensor data
-                if (tempData != null && tempData.getTemp()
-                        < 50){
-
-                    getWindow().getDecorView().setBackgroundColor(getResources().getColor
-                            (R.color.white, null));
-                }else {
-//                    Toast.makeText(VehicleListActivity.this, "Danger!!!",
-//                            Toast.LENGTH_SHORT).show();
-
-                    getWindow().getDecorView().setBackgroundColor(getResources().getColor
-                            (R.color.red, null));
-                }
-
-            } else {
-                Log.d("FAIL", "No lol ----------------");
-            }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(dataReceiver);
     }
 }
