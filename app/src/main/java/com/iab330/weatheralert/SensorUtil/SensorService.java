@@ -35,7 +35,7 @@ public class SensorService extends Service implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null){
-
+            Log.d("OnCreateTesting", "Running---------------");
             tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
         }else {
@@ -56,6 +56,7 @@ public class SensorService extends Service implements SensorEventListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (tempSensor != null){
+            Log.d("OnCreateTesting", "Running2--------------");
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
@@ -84,6 +85,7 @@ public class SensorService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d("Running", "Complete");
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             float temp = sensorEvent.values[0];
@@ -92,38 +94,36 @@ public class SensorService extends Service implements SensorEventListener {
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
 
             // Save data into database
-            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-            AsyncTask.execute(()->{
-                temperatureDao.insertTemperature(temperatureData);
-            });
+            //TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
+            //AsyncTask.execute(()-> temperatureDao.insertTemperature(temperatureData));
 
         }
 
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            float z = sensorEvent.values[2];
-            double magnitude = Math.sqrt(x * x + y * y + z * z);
-            Log.d("Sensor data ", "Acceleration towards X, Y, and Z "+
-                    Arrays.toString(sensorEvent.values) +" and magnitude: "+magnitude);
-
-
-            //AccelerometerData accelerometerData = new
-                    //AccelerometerData(sensorEvent.timestamp, x, y, z, magnitude);
-
-            // Save data into database
-            //AccelerometerDao accelerometerDao = MyApp.getAppDatabase().accelerometerDao();
-
-            //AsyncTask.execute(()->{
-                //accelerometerDao.insertAccelerometer(accelerometerData);
-            //});
-
-            // Send data to the activity
-            Intent broadcastIntent = new Intent("VEHICLE_SENSOR_DATA");
-            //broadcastIntent.putExtra("accelerometerData", accelerometerData);
-            sendBroadcast(broadcastIntent);
-
-        }
+//        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+//            float x = sensorEvent.values[0];
+//            float y = sensorEvent.values[1];
+//            float z = sensorEvent.values[2];
+//            double magnitude = Math.sqrt(x * x + y * y + z * z);
+//            Log.d("Sensor data ", "Acceleration towards X, Y, and Z "+
+//                    Arrays.toString(sensorEvent.values) +" and magnitude: "+magnitude);
+//
+//
+//            //AccelerometerData accelerometerData = new
+//                    //AccelerometerData(sensorEvent.timestamp, x, y, z, magnitude);
+//
+//            // Save data into database
+//            //AccelerometerDao accelerometerDao = MyApp.getAppDatabase().accelerometerDao();
+//
+//            //AsyncTask.execute(()->{
+//                //accelerometerDao.insertAccelerometer(accelerometerData);
+//            //});
+//
+//            // Send data to the activity
+//            Intent broadcastIntent = new Intent("VEHICLE_SENSOR_DATA");
+//            //broadcastIntent.putExtra("accelerometerData", accelerometerData);
+//            sendBroadcast(broadcastIntent);
+//
+//        }
 
     }
 

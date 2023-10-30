@@ -2,9 +2,15 @@ package com.iab330.weatheralert;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.ImageButton;
+
+import com.iab330.weatheralert.DB.TemperatureData;
+import com.iab330.weatheralert.SensorUtil.SensorService;
 
 public class DataActivity extends AppCompatActivity {
 
