@@ -133,16 +133,19 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             float temp = sensorEvent.values[0];
 
+
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
+
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA");
+            broadcastIntent.putExtra("temperatureData", String.valueOf(temp));
+            sendBroadcast(broadcastIntent);
 
             // Save data into database
 //            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
 //            AsyncTask.execute(()->{
 //                temperatureDao.insertTemperature(temperatureData);
 //            });
-            Log.d("Sensor data ", "Ambient temperature is: "+temp+" C");
-
-
+            //Log.d("Sensor data ", "Ambient temperature is: "+temp+" C");
 
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE){
