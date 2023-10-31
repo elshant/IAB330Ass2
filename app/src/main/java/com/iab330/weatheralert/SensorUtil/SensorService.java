@@ -83,7 +83,6 @@ public class SensorService extends Service implements SensorEventListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         if (sensorManager!=null){
             sensorManager.unregisterListener(this);
         }
