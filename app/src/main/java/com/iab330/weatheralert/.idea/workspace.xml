@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="811806ed-8baa-46e4-8b78-079dc1c36571" name="Changes" comment="" />
+    <list default="true" id="811806ed-8baa-46e4-8b78-079dc1c36571" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/DB/TemperatureData.java" beforeDir="false" afterPath="$PROJECT_DIR$/DB/TemperatureData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SensorSettingsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/SensorSettingsActivity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

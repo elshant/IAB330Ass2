@@ -11,7 +11,7 @@ import java.util.List;
 public interface HumidityDao {
 
     @Insert
-    void insertTemperature(HumidityData humidityData);
+    void insertHumidity(HumidityData humidityData);
 
     @Query("SELECT * FROM humidityData")
     LiveData<List<HumidityData>> getAllHumidityData();

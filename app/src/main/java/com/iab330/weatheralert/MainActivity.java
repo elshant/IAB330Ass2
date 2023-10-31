@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 // Receive the sensor data
                 String temperatureData = intent.getStringExtra("temperatureData");
 
-                Log.d("Recieved Temperature", "Recieved" + temperatureData);
+                Log.d("Received Temperature", "Received" + temperatureData);
 
                 TextView temperatureDisplay = findViewById(R.id.temperature);
                 temperatureDisplay.setText(temperatureData + "°C");
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 // Receive the sensor data
                 String airPressureData = intent.getStringExtra("airPressureData");
 
-                Log.d("Recieved Pressure", "Recieved" + airPressureData);
+                Log.d("Received Pressure", "Received" + airPressureData);
 
                 TextView airPressureDisplay = findViewById(R.id.airpressure);
                 airPressureDisplay.setText(airPressureData + "hPa");
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 // Receive the sensor data
                 String humidityData = intent.getStringExtra("humidityData");
 
-                Log.d("Recieved Humidity", "Recieved" + humidityData);
+                Log.d("Received Humidity", "Received" + humidityData);
 
                 TextView humidityDisplay = findViewById(R.id.humidity);
                 humidityDisplay.setText(humidityData + "%");
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filterHumidity = new IntentFilter("WEATHER_SENSOR_DATA_HUMIDITY");
         registerReceiver(dataReceiver, filterHumidity);
     }
+
+
     @Override
     protected void onDestroy(){
         super.onDestroy();

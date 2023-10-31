@@ -4,7 +4,6 @@ package com.iab330.weatheralert.DB;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
 
 @Entity(tableName = "temperatureData")
 public class TemperatureData {

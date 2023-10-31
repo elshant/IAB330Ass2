@@ -17,7 +17,9 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
+import com.iab330.weatheralert.DB.AirPressureDao;
 import com.iab330.weatheralert.DB.AirPressureData;
+import com.iab330.weatheralert.DB.HumidityDao;
 import com.iab330.weatheralert.DB.HumidityData;
 import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
@@ -138,8 +140,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
             float temp = sensorEvent.values[0];
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
@@ -147,12 +147,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
             broadcastIntent.putExtra("temperatureData", String.valueOf(temp));
             sendBroadcast(broadcastIntent);
 
-            Log.d("TempData", temperatureData.toString());
 
             TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-            AsyncTask.execute(()->{
-                temperatureDao.insertTemperature(temperatureData);
-            });
+            AsyncTask.execute(() -> temperatureDao.insertTemperature(temperatureData));
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
             float airPressure = sensorEvent.values[0];
@@ -162,6 +159,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
                 Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_AIR_PRESSURE");
                 broadcastIntent.putExtra("airPressureData", String.valueOf(airPressure));
                 sendBroadcast(broadcastIntent);
+
+                AirPressureDao airPressureDao = MyApp.getAppDatabase().airPressureDao();
+                AsyncTask.execute(() -> airPressureDao.insertAirPressure(airPressureData));
                 prevAirPressure = airPressure;
             }
         }
@@ -171,6 +171,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
             Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_HUMIDITY");
             broadcastIntent.putExtra("humidityData", String.valueOf(humid));
             sendBroadcast(broadcastIntent);
+
+            HumidityDao humidityDao = MyApp.getAppDatabase().humidityDao();
+            AsyncTask.execute(() -> humidityDao.insertHumidity(humidityData));
         }
 
 
