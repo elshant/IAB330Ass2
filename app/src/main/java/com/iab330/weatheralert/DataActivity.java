@@ -78,7 +78,6 @@ public class DataActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
         AnyChartView tempChartView = findViewById(R.id.tempChart);
-        tempChartView.setProgressBar(findViewById(R.id.progress_bar));
 
         Cartesian tempLineChart = AnyChart.line();
         tempLineChart.animation(true); // Setting Animation for the chart
@@ -104,6 +103,7 @@ public class DataActivity extends AppCompatActivity {
         Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }"); // Map for mapping values in X-Axis (time) with Y-axix (temperature)
 
         Line series1 = tempLineChart.line(series1Mapping);
+        //series1.name(tvVehicleName.getText().toString());
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)

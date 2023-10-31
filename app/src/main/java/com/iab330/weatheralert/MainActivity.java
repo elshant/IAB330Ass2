@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnHome;
     ImageButton btnAlert;
     ImageButton btnSetting;
+    TextView dataLink;
     Intent service;
     SensorDataReceiver dataReceiver;
     LinearLayout mainLayout;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();
+        handleDataClick();
         manageSensorService();
     }
 
@@ -100,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void handleDataClick(){
+        dataLink.setOnClickListener(view -> {
+            Intent intent = new Intent(this, DataActivity.class);
+            startActivity(intent);
+        });
+    }
+
     private void handleBackgroundChange() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             currentColor = "F2F3F4";
         }
 
-        for (int i = 0; i < mainLayout.getChildCount() && i < 3; i++) {
+        for (int i = 0; i < mainLayout.getChildCount() && i < 4; i++) {
             View v = mainLayout.getChildAt(i);
             if (v instanceof TextView) {
                 ((TextView) v).setTextColor(Color.parseColor(currentColor));
@@ -187,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
         btnHome = findViewById(R.id.homeBtn);
         btnSetting = findViewById(R.id.settingsBtn);
         btnAlert = findViewById(R.id.alertBtn);
+        dataLink = findViewById(R.id.detailsText);
         mainLayout = findViewById(R.id.mainLayout);
     }
 }

@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -18,8 +19,12 @@ import android.widget.Switch;
 
 import com.iab330.weatheralert.DB.AirPressureData;
 import com.iab330.weatheralert.DB.HumidityData;
+import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
+import com.iab330.weatheralert.Utils.MyApp;
+
+import java.util.concurrent.ExecutorService;
 
 
 public class SensorSettingsActivity extends AppCompatActivity implements SensorEventListener {
@@ -27,6 +32,7 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
     private ImageButton btnHome;
     private ImageButton btnAlert;
     private ImageButton btnSetting;
+
     private Switch switchTemp;
     private Switch switchAir;
     private Switch switchHumid;
@@ -136,18 +142,17 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
             float temp = sensorEvent.values[0];
-            Log.d("Temp Sensed", "yep" + temp);
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
             Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_TEMP");
             broadcastIntent.putExtra("temperatureData", String.valueOf(temp));
             sendBroadcast(broadcastIntent);
 
-            // Save data into database
-//            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-//            AsyncTask.execute(()->{
-//                temperatureDao.insertTemperature(temperatureData);
-//            });
-            //Log.d("Sensor data ", "Ambient temperature is: "+temp+" C");
+            Log.d("TempData", temperatureData.toString());
+
+            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
+            AsyncTask.execute(()->{
+                temperatureDao.insertTemperature(temperatureData);
+            });
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
             float airPressure = sensorEvent.values[0];
