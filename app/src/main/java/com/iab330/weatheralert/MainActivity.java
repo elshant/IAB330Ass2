@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -45,12 +46,30 @@ public class MainActivity extends AppCompatActivity {
     private class SensorDataReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA")){
+            if (intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA_TEMP")){
                 // Receive the sensor data
+                String temperatureData = intent.getStringExtra("temperatureData");
 
-                TemperatureData temperatureData = (TemperatureData)
-                        intent.getSerializableExtra("temperatureData");
+                Log.d("Recieved Temperature", "Recieved" + temperatureData);
 
+                TextView temperatureDisplay = findViewById(R.id.temperature);
+                temperatureDisplay.setText(temperatureData + "°C");
+            } else if(intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA_AIR_PRESSURE")){
+                // Receive the sensor data
+                String airPressureData = intent.getStringExtra("airPressureData");
+
+                Log.d("Recieved Pressure", "Recieved" + airPressureData);
+
+                TextView airPressureDisplay = findViewById(R.id.airpressure);
+                airPressureDisplay.setText(airPressureData + "hPa");
+            } else if(intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA_HUMIDITY")){
+                // Receive the sensor data
+                String humidityData = intent.getStringExtra("humidityData");
+
+                Log.d("Recieved Humidity", "Recieved" + humidityData);
+
+                TextView humidityDisplay = findViewById(R.id.humidity);
+                humidityDisplay.setText(humidityData + "%");
             }
         }
     }
@@ -59,8 +78,12 @@ public class MainActivity extends AppCompatActivity {
         startService(service);
 
         dataReceiver = new SensorDataReceiver();
-        IntentFilter filter = new IntentFilter("WEATHER_SENSOR_DATA");
-        registerReceiver(dataReceiver, filter);
+        IntentFilter filterTemp = new IntentFilter("WEATHER_SENSOR_DATA_TEMP");
+        registerReceiver(dataReceiver, filterTemp);
+        IntentFilter filterPressure = new IntentFilter("WEATHER_SENSOR_DATA_AIR_PRESSURE");
+        registerReceiver(dataReceiver, filterPressure);
+        IntentFilter filterHumidity = new IntentFilter("WEATHER_SENSOR_DATA_HUMIDITY");
+        registerReceiver(dataReceiver, filterHumidity);
     }
     @Override
     protected void onDestroy(){
@@ -69,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(dataReceiver);
         }
     }
-
-
 
     private void handleHomeClick(){
         btnHome.setOnClickListener(view -> {
@@ -83,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
-        TextView timeOfDay2 = findViewById(R.id.timeOfDay);
+        Log.d("timeOfDay", String.valueOf(timeOfDay));
 
+        TextView timeOfDay2 = findViewById(R.id.timeOfDay);
 
         if(timeOfDay >= 8 && timeOfDay < 16){
             mainLayout.setBackgroundResource(R.drawable.background_2);
@@ -94,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             mainLayout.setBackgroundResource(R.drawable.background_3);
             setColour("Evening");
             timeOfDay2.setText("Evening,");
-        }else if(timeOfDay >= 0 && timeOfDay < 4){
+        }else if(timeOfDay >= 0 && timeOfDay < 4 || timeOfDay >= 20 && timeOfDay < 24){
             mainLayout.setBackgroundResource(R.drawable.background_4);
             setColour("Night");
             timeOfDay2.setText("Night,");
@@ -107,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setColour(String timeframe) {
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        LinearLayout conditionsDisplay = findViewById(R.id.conditionsDisplay);
+        LinearLayout sensorDataDisplay = findViewById(R.id.sensorDataDisplay);
+        LinearLayout sensorDataDisplayPressure = findViewById(R.id.sensorDataDisplayPressure);
         String currentColor;
 
         if(Objects.equals(timeframe, "Midday") || Objects.equals(timeframe, "Evening")) {
@@ -117,8 +142,29 @@ public class MainActivity extends AppCompatActivity {
             currentColor = "F2F3F4";
         }
 
-        for (int i = 0; i < mainLayout.getChildCount(); i++) {
+        for (int i = 0; i < mainLayout.getChildCount() && i < 3; i++) {
             View v = mainLayout.getChildAt(i);
+            if (v instanceof TextView) {
+                ((TextView) v).setTextColor(Color.parseColor(currentColor));
+            }
+        }
+
+        for (int i = 0; i < conditionsDisplay.getChildCount(); i++) {
+            View v = conditionsDisplay.getChildAt(i);
+            if (v instanceof TextView) {
+                ((TextView) v).setTextColor(Color.parseColor(currentColor));
+            }
+        }
+
+        for (int i = 0; i < sensorDataDisplay.getChildCount(); i++) {
+            View v = sensorDataDisplay.getChildAt(i);
+            if (v instanceof TextView) {
+                ((TextView) v).setTextColor(Color.parseColor(currentColor));
+            }
+        }
+
+        for (int i = 0; i < sensorDataDisplayPressure.getChildCount(); i++) {
+            View v = sensorDataDisplayPressure.getChildAt(i);
             if (v instanceof TextView) {
                 ((TextView) v).setTextColor(Color.parseColor(currentColor));
             }

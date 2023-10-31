@@ -8,8 +8,6 @@
     android:background="@drawable/background_1"
     android:orientation="vertical">
 
-    <!--    @drawable/timo_wagner_ft6_ykb0nfg_unsplash-->
-
     <TextView
         android:id="@+id/homeText"
         android:layout_width="match_parent"
@@ -57,32 +55,62 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="13dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="40dp"
             android:background="@drawable/tempdark"></ImageView>
 
         <TextView
             android:id="@+id/temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Temp"></TextView>
+            android:textSize="25dp"
+            android:text="32°C"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="10dp"></TextView>
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="30dp"
+            android:layout_width="31dp"
+            android:layout_height="40dp"
             android:background="@drawable/humiditydark" />
 
         <TextView
             android:id="@+id/humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity" />
+            android:textSize="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:text="20%" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sensorDataDisplayPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="33dp"
+            android:layout_height="40dp"
+            android:background="@drawable/barometer_dark" />
+
+        <TextView
+            android:id="@+id/airpressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:text="20%" />
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="78dp"
-        android:layout_marginTop="525dp"
+        android:layout_marginTop="450dp"
         android:background="#373D3F">
 
         <ImageButton

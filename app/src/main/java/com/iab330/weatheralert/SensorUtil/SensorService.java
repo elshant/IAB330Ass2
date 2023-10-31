@@ -1,5 +1,7 @@
 package com.iab330.weatheralert.SensorUtil;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +12,16 @@ import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.TextClock;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
+import com.iab330.weatheralert.MainActivity;
+import com.iab330.weatheralert.Utils.MyApp;
 
 import java.util.Arrays;
 
@@ -93,43 +99,23 @@ public class SensorService extends Service implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
+        Log.d("cheese?", "Cheese.");
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             float temp = sensorEvent.values[0];
-            Log.d("Sensor data ", "Ambient temperature is: "+temp+" C");
-
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
-
-            // Save data into database
-//            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
+            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
 //            AsyncTask.execute(()->{
 //                temperatureDao.insertTemperature(temperatureData);
 //            });
-
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA");
+            broadcastIntent.putExtra("temperatureData", temp);
+            sendBroadcast(broadcastIntent);
         }
 
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            float z = sensorEvent.values[2];
-            double magnitude = Math.sqrt(x * x + y * y + z * z);
-            Log.d("Sensor data ", "Acceleration towards X, Y, and Z "+
-                    Arrays.toString(sensorEvent.values) +" and magnitude: "+magnitude);
-
-
-            //AccelerometerData accelerometerData = new
-                    //AccelerometerData(sensorEvent.timestamp, x, y, z, magnitude);
-
-            // Save data into database
-            //AccelerometerDao accelerometerDao = MyApp.getAppDatabase().accelerometerDao();
-
-            //AsyncTask.execute(()->{
-                //accelerometerDao.insertAccelerometer(accelerometerData);
-            //});
-
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE){
+            float pressure = sensorEvent.values[0];
+            Log.d("Sensor data ", "Ambient pressure is " + pressure);
             // Send data to the activity
-            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA");
-            //broadcastIntent.putExtra("accelerometerData", accelerometerData);
-            sendBroadcast(broadcastIntent);
 
         }
 
@@ -139,4 +125,8 @@ public class SensorService extends Service implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
+//    public class displayData extends AppCompatActivity {
+//
+//    }
 }

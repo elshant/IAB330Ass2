@@ -87,6 +87,7 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
     }
     private void handleHumidSensorClick(){
+        switchHumid.toggle();
         switchHumid.setOnClickListener(view -> {
             if (switchHumid.isChecked()) {
                 sensorManager.registerListener(this, SensorService.humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -132,11 +133,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             float temp = sensorEvent.values[0];
-
-
+            Log.d("Temp Sensed", "yep" + temp);
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
-
-            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA");
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_TEMP");
             broadcastIntent.putExtra("temperatureData", String.valueOf(temp));
             sendBroadcast(broadcastIntent);
 
@@ -146,33 +145,20 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 //                temperatureDao.insertTemperature(temperatureData);
 //            });
             //Log.d("Sensor data ", "Ambient temperature is: "+temp+" C");
-
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE){
             float airPressure = sensorEvent.values[0];
-
-            AirPressureData airPressureData = new AirPressureData(airPressure, sensorEvent.timestamp);
-
-            // Save data into database
-//            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-//            AsyncTask.execute(()->{
-//                temperatureDao.insertTemperature(temperatureData);
-//            });
-            Log.d("Sensor data ", "Ambient air pressure is: "+airPressure+"mPa");
+            AirPressureData airPressureData = new AirPressureData(airPressure, sensorEvent.timestamp);Log.d("Sensed - pressure ", "true");
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_AIR_PRESSURE");
+            broadcastIntent.putExtra("airPressureData", String.valueOf(airPressure));
+            sendBroadcast(broadcastIntent);
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY){
             float humid = sensorEvent.values[0];
-
             HumidityData humidityData = new HumidityData(humid, sensorEvent.timestamp);
-
-            // Save data into database
-//            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-//            AsyncTask.execute(()->{
-//                temperatureDao.insertTemperature(temperatureData);
-//            });
-            Log.d("Sensor data ", "Ambient temperature is: "+humid+" %");
-
-
+            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_HUMIDITY");
+            broadcastIntent.putExtra("humidityData", String.valueOf(humid));
+            sendBroadcast(broadcastIntent);
         }
 
     }
