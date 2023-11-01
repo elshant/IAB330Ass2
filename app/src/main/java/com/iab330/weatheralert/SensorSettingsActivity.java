@@ -2,10 +2,12 @@ package com.iab330.weatheralert;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -14,8 +16,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.Switch;
+import android.widget.LinearLayout;
 
 import com.iab330.weatheralert.DB.AirPressureDao;
 import com.iab330.weatheralert.DB.AirPressureData;
@@ -25,6 +28,7 @@ import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 import com.iab330.weatheralert.Utils.MyApp;
+import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.util.concurrent.ExecutorService;
 
@@ -35,12 +39,14 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
     private ImageButton btnAlert;
     private ImageButton btnSetting;
 
-    private Switch switchTemp;
-    private Switch switchAir;
-    private Switch switchHumid;
+    private SwitchCompat switchTemp;
+    private SwitchCompat switchAir;
+    private SwitchCompat switchHumid;
 
     private SensorManager sensorManager;
     private float prevAirPressure;
+    private LinearLayout mainLayout;
+    private FrameLayout footerTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,14 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         setContentView(R.layout.activity_sensor_settings);
         setViewIds();
 
+        if (SharedPrefManager.isDarkModeEnabled()){
+            mainLayout.setBackgroundColor(Color.DKGRAY);
+            footerTab.setBackgroundColor(Color.GRAY);
+        }
+        else{
+            mainLayout.setBackgroundColor(Color.WHITE);
+            footerTab.setBackgroundColor(Color.DKGRAY);
+        }
 
         handleAlertClick();
         handleSettingClick();
@@ -133,9 +147,13 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         btnSetting = findViewById(R.id.settingsBtn);
         btnAlert = findViewById(R.id.alertBtn);
 
+
         switchAir = findViewById(R.id.airPressureEnabled);
         switchTemp = findViewById(R.id.temperatureEnabled);
         switchHumid = findViewById(R.id.humidityEnabled);
+
+        mainLayout = findViewById(R.id.sensorSettings);
+        footerTab = findViewById(R.id.footerTab);
     }
 
     @Override

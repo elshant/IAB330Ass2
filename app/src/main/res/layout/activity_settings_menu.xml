@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/settingsMenu">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="#373D3F"
         android:textSize="50sp"
         android:textStyle="bold" />
@@ -28,11 +27,11 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginBottom="20dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:backgroundTint="#9A9CFC"
             android:textColor="#373D3F"
-            android:text="Visual Appearance" />
+            android:text="@string/visual_appearance" />
 
         <Button
             android:id="@+id/profileBtn"
@@ -43,7 +42,7 @@
             android:textStyle="bold"
             android:backgroundTint="#9A9CFC"
             android:textColor="#373D3F"
-            android:text="Profile settings" />
+            android:text="@string/profile_settings" />
 
         <Button
             android:id="@+id/sensorBtn"
@@ -53,38 +52,48 @@
             android:textStyle="bold"
             android:backgroundTint="#9A9CFC"
             android:textColor="#373D3F"
-            android:text="Sensor Settings" />
+            android:text="@string/sensor_settings" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="310dp"
-        android:background="#373D3F">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <FrameLayout
+            android:id="@+id/footerTab"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:background="#373D3F">
 
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/home" />
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/home"
+                android:contentDescription="@string/home_button_settings_menu" />
 
-        <ImageButton
-            android:id="@+id/alertBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="185dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/alert" />
+            <ImageButton
+                android:id="@+id/alertBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="185dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/alert"
+                android:contentDescription="@string/alert_button_settings_menu" />
 
-        <ImageButton
-            android:id="@+id/settingsBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/settingsselected" />
-    </FrameLayout>
+            <ImageButton
+                android:id="@+id/settingsBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/settingsselected"
+                android:contentDescription="@string/settings_button_settings_menu" />
+        </FrameLayout>
+    </RelativeLayout>
+
 </LinearLayout>

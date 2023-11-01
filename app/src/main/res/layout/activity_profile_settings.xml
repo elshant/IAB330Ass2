@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/profileSettings">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="Profile"
+        android:text="@string/profile"
         android:textSize="50sp"
         android:textColor="#474BFF"
         android:textStyle="bold"
@@ -64,10 +63,10 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#D9D9D9"
-            android:text="Change Name"
+            android:text="@string/change_name"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
         <Button
             android:layout_width="match_parent"
@@ -75,20 +74,20 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#D9D9D9"
-            android:text="Change Email"
+            android:text="@string/change_email"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#D9D9D9"
-            android:text="Log out"
+            android:text="@string/log_out"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -97,40 +96,52 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#FF0000"
-            android:text="Delete Account"
+            android:text="@string/delete_account"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#373D3F">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <FrameLayout
+            android:id="@+id/footerTab"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:background="#373D3F">
 
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/home" />
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/home"
+                android:contentDescription="@string/home_button_profile_activity" />
 
-        <ImageButton
-            android:id="@+id/alertBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="185dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/alert" />
+            <ImageButton
+                android:id="@+id/alertBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="185dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/alert"
+                android:contentDescription="@string/alert_button_profile_activity" />
 
-        <ImageButton
-            android:id="@+id/settingsBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/settingsselected" />
-    </FrameLayout>
+            <ImageButton
+                android:id="@+id/settingsBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/settingsselected"
+                android:contentDescription="@string/settings_button_profile_activity" />
+        </FrameLayout>
+    </RelativeLayout>
+
+
 
 </LinearLayout>

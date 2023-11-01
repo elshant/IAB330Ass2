@@ -12,11 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
+import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -30,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
     Intent service;
     SensorDataReceiver dataReceiver;
     LinearLayout mainLayout;
+    TextView temperature;
+    TextView humidity;
+    TextView airPressure;
+    ImageView tempImg;
+    ImageView humidImg;
+    ImageView airImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +61,41 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("Received Temperature", "Received" + temperatureData);
 
-                TextView temperatureDisplay = findViewById(R.id.temperature);
-                temperatureDisplay.setText(temperatureData + "°C");
+                if (SharedPrefManager.isTempDisplayed()){
+                    temperature.setText(temperatureData + "°C");
+                }
+                else{
+                    tempImg.setVisibility(ImageView.GONE);
+                    temperature.setVisibility(TextView.GONE);
+                }
+
             } else if(intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA_AIR_PRESSURE")){
                 // Receive the sensor data
                 String airPressureData = intent.getStringExtra("airPressureData");
 
                 Log.d("Received Pressure", "Received" + airPressureData);
 
-                TextView airPressureDisplay = findViewById(R.id.airpressure);
-                airPressureDisplay.setText(airPressureData + "hPa");
+                if (SharedPrefManager.isAirDisplayed()){
+                    airPressure.setText(airPressureData + "hPa");
+                }
+                else{
+                    airImg.setVisibility(ImageView.GONE);
+                    airPressure.setVisibility(TextView.GONE);
+                }
+
             } else if(intent.getAction() != null && intent.getAction().equals("WEATHER_SENSOR_DATA_HUMIDITY")){
                 // Receive the sensor data
                 String humidityData = intent.getStringExtra("humidityData");
 
                 Log.d("Received Humidity", "Received" + humidityData);
 
-                TextView humidityDisplay = findViewById(R.id.humidity);
-                humidityDisplay.setText(humidityData + "%");
+                if (SharedPrefManager.isHumidityDisplayed()){
+                    humidity.setText(humidityData + "%");
+                }
+                else{
+                    humidImg.setVisibility(ImageView.GONE);
+                    humidity.setVisibility(TextView.GONE);
+                }
             }
         }
     }
@@ -200,5 +224,13 @@ public class MainActivity extends AppCompatActivity {
         btnAlert = findViewById(R.id.alertBtn);
         dataLink = findViewById(R.id.detailsText);
         mainLayout = findViewById(R.id.mainLayout);
+
+        temperature = findViewById(R.id.temperature);
+        humidity = findViewById(R.id.humidity);
+        airPressure = findViewById(R.id.airpressure);
+
+        tempImg = findViewById(R.id.tempImg);
+        humidImg = findViewById(R.id.humidImg);
+        airImg = findViewById(R.id.airImg);
     }
 }

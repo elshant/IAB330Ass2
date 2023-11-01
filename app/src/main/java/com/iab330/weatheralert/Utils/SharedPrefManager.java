@@ -22,6 +22,13 @@ public class SharedPrefManager {
     private static final String KEY_HUMIDITY_ENABLED = "isHumidityEnabled";
     private static final String KEY_TEMPERATURE_ENABLED = "isTemperatureEnabled";
 
+    private static final String KEY_AIR_PRESSURE_DISPLAYED = "isAirPressureDisplayed";
+    private static final String KEY_HUMIDITY_DISPLAYED = "isHumidityDisplayed";
+    private static final String KEY_TEMPERATURE_DISPLAYED = "isTemperatureDisplayed";
+
+    private static final String KEY_DARKMODE_ENABLED = "isDarkModeEnabled";
+
+
     public static void setLoginState(boolean isLoggedIn){
         SharedPreferences.Editor editor = getSharedPreference().edit();
         // Saving login state
@@ -38,6 +45,18 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = getSharedPreference().edit();
         // Saving login state
         editor.putBoolean(KEY_USER_ROLE, true); // or false if not logged in
+        editor.apply();
+    }
+
+    public static boolean isDarkModeEnabled(){
+        boolean isDarkModeEnabled = getSharedPreference().getBoolean(KEY_DARKMODE_ENABLED, false);
+        return isDarkModeEnabled;
+    }
+
+    public static void setDarkMode(boolean isDarkModeEnabled){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+        // Saving Dark mode
+        editor.putBoolean(KEY_DARKMODE_ENABLED, isDarkModeEnabled);
         editor.apply();
     }
 
@@ -78,6 +97,42 @@ public class SharedPrefManager {
 //        editor.putBoolean(KEY_HUMIDITY_ENABLED, true); // or false if not enabled
 //        editor.apply();
 //    }
+
+    public static boolean isAirDisplayed(){
+        boolean isAirDisplayed = getSharedPreference().getBoolean(KEY_AIR_PRESSURE_DISPLAYED, false);
+        return isAirDisplayed;
+    }
+
+    public static void setAirDisplayed(boolean isAirDisplayed){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+
+        editor.putBoolean(KEY_AIR_PRESSURE_DISPLAYED, isAirDisplayed); // or false if not enabled
+        editor.apply();
+    }
+
+    public static boolean isTempDisplayed(){
+        boolean isTempDisplayed = getSharedPreference().getBoolean(KEY_TEMPERATURE_DISPLAYED, false);
+        return isTempDisplayed;
+    }
+
+    public static void setTempDisplayed(boolean isTempDisplayed){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+
+        editor.putBoolean(KEY_TEMPERATURE_ENABLED, isTempDisplayed); // or false if not enabled
+        editor.apply();
+    }
+
+    public static boolean isHumidityDisplayed(){
+        boolean isHumidityDisplayed = getSharedPreference().getBoolean(KEY_HUMIDITY_DISPLAYED, false);
+        return isHumidityDisplayed;
+    }
+
+    public static void setHumidityDisplayed(boolean isHumidityDisplayed){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+
+        editor.putBoolean(KEY_HUMIDITY_ENABLED, isHumidityDisplayed); // or false if not enabled
+        editor.apply();
+    }
 
 }
 

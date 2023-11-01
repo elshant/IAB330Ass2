@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +14,7 @@
         android:includeFontPadding="false"
         android:lineHeight="1dp"
         android:padding="20dp"
-        android:text="Home"
+        android:text="@string/home"
         android:textColor="#474BFF"
         android:textSize="50sp"
         android:textStyle="bold" />
@@ -33,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
-            android:text="Time of Day"
+            android:text="@string/time_of_day"
             android:textSize="23sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/weatherCondition"
@@ -43,7 +41,7 @@
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:textStyle="bold"
-            android:text="Weather condition" />
+            android:text="@string/weather_condition" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,21 +53,24 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/tempImg"
             android:layout_width="23dp"
             android:layout_height="40dp"
-            android:background="@drawable/tempdark"></ImageView>
+            android:background="@drawable/tempdark" />
 
         <TextView
             android:id="@+id/temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:text="32°C"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
-            android:layout_marginRight="10dp"></TextView>
+            android:layout_marginRight="10dp"
+            android:visibility="visible" />
 
         <ImageView
+            android:id="@+id/humidImg"
             android:layout_width="31dp"
             android:layout_height="40dp"
             android:background="@drawable/humiditydark" />
@@ -78,7 +79,7 @@
             android:id="@+id/humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="10dp"
             android:text="20%" />
@@ -93,15 +94,17 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/airImg"
             android:layout_width="33dp"
             android:layout_height="40dp"
-            android:background="@drawable/barometer_dark" />
+            android:background="@drawable/barometer_dark"
+            android:contentDescription="@string/barometer_image" />
 
         <TextView
             android:id="@+id/airpressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="10dp"
             android:text="20%" />
@@ -114,39 +117,48 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:clickable="true"
-        android:text="See more..."
-        android:textSize="23dp"
+        android:text="@string/see_more"
+        android:textSize="23sp"
         android:textStyle="bold" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="78dp"
-        android:layout_marginTop="450dp"
-        android:background="#373D3F">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <FrameLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:background="#373D3F">
 
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/homeselected" />
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/homeselected"
+                android:contentDescription="@string/home_button_main_activity" />
 
-        <ImageButton
-            android:id="@+id/alertBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="185dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/alert" />
+            <ImageButton
+                android:id="@+id/alertBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="185dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/alert"
+                android:contentDescription="@string/alert_button_main_activity" />
 
-        <ImageButton
-            android:id="@+id/settingsBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/settings" />
-    </FrameLayout>
+            <ImageButton
+                android:id="@+id/settingsBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/settings"
+                android:contentDescription="@string/settings_button_main_activity" />
+        </FrameLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

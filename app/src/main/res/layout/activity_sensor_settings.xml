@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/sensorSettings">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="Sensors"
+        android:text="@string/sensors"
         android:textSize="50sp"
         android:textColor="#474BFF"
         android:textStyle="bold"
@@ -22,17 +22,17 @@
         android:padding="20dp"
         android:layout_marginTop="20dp"
         >
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/airPressureEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Air pressure Sensor"
-            android:textSize="30dp"/>
+            android:text="@string/air_pressure_sensor"
+            android:textSize="30sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensitivity"
+            android:text="@string/sensitivity"
             android:layout_marginTop="10dp"/>
         <SeekBar
             android:id="@+id/airPressureSensitivity"
@@ -46,17 +46,17 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:layout_marginTop="20dp">
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/temperatureEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temperature Sensor"
+            android:text="@string/temperature_sensor"
             android:textSize="30sp" />
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/tempFahrenheitEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use Fahrenheit" />
+            android:text="@string/use_fahrenheit" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,46 +64,50 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:layout_marginTop="20dp">
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/humidityEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity Sensor"
+            android:text="@string/humidity_sensor"
             android:textSize="30sp" />
-        <Switch
-            android:id="@+id/humidFahrenheitEnabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Use Fahrenheit" />
     </LinearLayout>
-    <FrameLayout
-        android:layout_marginTop="150dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#373D3F"
-        >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <FrameLayout
+            android:id="@+id/footerTab"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_alignParentBottom="true"
+            android:background="#373D3F"
+            >
 
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:background="@drawable/home"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="17dp" />
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:background="@drawable/home"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="17dp"
+                android:contentDescription="@string/home_button_sensor_activity" />
 
-        <ImageButton
-            android:id="@+id/alertBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:background="@drawable/alert"
-            android:layout_marginLeft="185dp"
-            android:layout_marginTop="17dp" />
-        <ImageButton
-            android:id="@+id/settingsBtn"
-            android:layout_width="40dp"
-            android:layout_height="37dp"
-            android:background="@drawable/settingsselected"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="17dp" />
-    </FrameLayout>
+            <ImageButton
+                android:id="@+id/alertBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:background="@drawable/alert"
+                android:layout_marginLeft="185dp"
+                android:layout_marginTop="17dp"
+                android:contentDescription="@string/alert_button_sensor_activity" />
+            <ImageButton
+                android:id="@+id/settingsBtn"
+                android:layout_width="40dp"
+                android:layout_height="37dp"
+                android:background="@drawable/settingsselected"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="17dp"
+                android:contentDescription="@string/settings_button_sensor_activity" />
+        </FrameLayout>
+    </RelativeLayout>
+
 </LinearLayout>
