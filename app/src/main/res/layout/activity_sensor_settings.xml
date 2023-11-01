@@ -87,7 +87,7 @@
                 android:layout_width="40dp"
                 android:layout_height="37dp"
                 android:background="@drawable/home"
-                android:layout_marginLeft="60dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="17dp"
                 android:contentDescription="@string/home_button_sensor_activity" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="40dp"
                 android:layout_height="37dp"
                 android:background="@drawable/alert"
-                android:layout_marginLeft="185dp"
+                android:layout_marginStart="185dp"
                 android:layout_marginTop="17dp"
                 android:contentDescription="@string/alert_button_sensor_activity" />
             <ImageButton
@@ -104,7 +104,7 @@
                 android:layout_width="40dp"
                 android:layout_height="37dp"
                 android:background="@drawable/settingsselected"
-                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp"
                 android:layout_marginTop="17dp"
                 android:contentDescription="@string/settings_button_sensor_activity" />
         </FrameLayout>

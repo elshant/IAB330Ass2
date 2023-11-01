@@ -23,7 +23,7 @@
         android:id="@+id/conditionsDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -48,7 +48,7 @@
         android:id="@+id/sensorDataDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -56,7 +56,8 @@
             android:id="@+id/tempImg"
             android:layout_width="23dp"
             android:layout_height="40dp"
-            android:background="@drawable/tempdark" />
+            android:background="@drawable/tempdark"
+            android:contentDescription="@string/temp_image" />
 
         <TextView
             android:id="@+id/temperature"
@@ -73,7 +74,8 @@
             android:id="@+id/humidImg"
             android:layout_width="31dp"
             android:layout_height="40dp"
-            android:background="@drawable/humiditydark" />
+            android:background="@drawable/humiditydark"
+            android:contentDescription="@string/humid_image" />
 
         <TextView
             android:id="@+id/humidity"
@@ -81,7 +83,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="20%" />
     </LinearLayout>
 
@@ -89,7 +91,7 @@
         android:id="@+id/sensorDataDisplayPressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -106,7 +108,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="20%" />
     </LinearLayout>
 
@@ -114,7 +116,7 @@
         android:id="@+id/detailsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:clickable="true"
         android:text="@string/see_more"
@@ -135,7 +137,7 @@
                 android:id="@+id/homeBtn"
                 android:layout_width="40dp"
                 android:layout_height="37dp"
-                android:layout_marginLeft="60dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/homeselected"
                 android:contentDescription="@string/home_button_main_activity" />
@@ -144,7 +146,7 @@
                 android:id="@+id/alertBtn"
                 android:layout_width="40dp"
                 android:layout_height="37dp"
-                android:layout_marginLeft="185dp"
+                android:layout_marginStart="185dp"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/alert"
                 android:contentDescription="@string/alert_button_main_activity" />
@@ -153,7 +155,7 @@
                 android:id="@+id/settingsBtn"
                 android:layout_width="40dp"
                 android:layout_height="37dp"
-                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/settings"
                 android:contentDescription="@string/settings_button_main_activity" />

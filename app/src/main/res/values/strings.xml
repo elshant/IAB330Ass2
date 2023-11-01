@@ -51,4 +51,6 @@
     <string name="settings_button_main_activity">Settings Button</string>
     <string name="alert_button_main_activity">Alert Button</string>
     <string name="home_button_main_activity">Home Button</string>
+    <string name="temp_image">Temp Image</string>
+    <string name="humid_image">Humid Image</string>
 </resources>

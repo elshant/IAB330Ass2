@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -67,19 +68,19 @@ public class VisualSettingsActivity extends AppCompatActivity {
         });
     }
     private void handleTempDisplay(){
-//        tempDisplaySwitch.toggle();
+        tempDisplaySwitch.toggle();
         tempDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setTempDisplayed(tempDisplaySwitch.isChecked());
         });
     }
     private void handleAirDisplay(){
-//        pressureDisplaySwitch.toggle();
+        pressureDisplaySwitch.toggle();
         pressureDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setAirDisplayed(pressureDisplaySwitch.isChecked());
         });
     }
     private void handleHumidDisplay(){
-//        humidDisplaySwitch.toggle();
+        humidDisplaySwitch.toggle();
         humidDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setHumidityDisplayed(humidDisplaySwitch.isChecked());
         });

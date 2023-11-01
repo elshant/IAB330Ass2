@@ -19,6 +19,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.iab330.weatheralert.DB.AirPressureDao;
 import com.iab330.weatheralert.DB.AirPressureData;
@@ -30,7 +31,6 @@ import com.iab330.weatheralert.SensorUtil.SensorService;
 import com.iab330.weatheralert.Utils.MyApp;
 import com.iab330.weatheralert.Utils.SharedPrefManager;
 
-import java.util.concurrent.ExecutorService;
 
 
 public class SensorSettingsActivity extends AppCompatActivity implements SensorEventListener {
@@ -40,6 +40,8 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
     private ImageButton btnSetting;
 
     private SwitchCompat switchTemp;
+    private SwitchCompat switchFahren;
+    private SeekBar airPressureSensitivity;
     private SwitchCompat switchAir;
     private SwitchCompat switchHumid;
 
@@ -68,15 +70,35 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         handleHomeClick();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
         handleTempSensorClick();
+        handleFahrenheitSwitch();
         handleAirSensorClick();
         handleHumidSensorClick();
 
-        switchAir.setChecked(SensorService.airSensor != null);
+        if (SharedPrefManager.isTempEnabled()){
+            switchTemp.setChecked(true);
+            sensorManager.registerListener(this, SensorService.tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        else{
+            switchTemp.setChecked(false);
+        }
 
-        switchTemp.setChecked(SensorService.tempSensor != null);
+        if (SharedPrefManager.isAirEnabled()){
+            switchAir.setChecked(true);
+            sensorManager.registerListener(this, SensorService.airSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        else{
+            switchAir.setChecked(false);
+        }
 
-        switchHumid.setChecked(SensorService.humiditySensor != null);
+        if (SharedPrefManager.isHumidityEnabled()){
+            switchHumid.setChecked(true);
+            sensorManager.registerListener(this, SensorService.humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        else{
+            switchHumid.setChecked(false);
+        }
     }
 
     private void handleTempSensorClick() {
@@ -85,9 +107,11 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
             if (switchTemp.isChecked()) {
                 sensorManager.registerListener(this, SensorService.tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Temperature Sensor Activated");
+                SharedPrefManager.setTempSensor(true);
             } else if (!switchTemp.isChecked()) {
                 sensorManager.unregisterListener(this, SensorService.tempSensor);
                 Log.d("Sensor data ", "Temperature Sensor Deactivated");
+                SharedPrefManager.setTempSensor(false);
             }
         });
 
@@ -100,12 +124,21 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
             if (switchAir.isChecked()) {
                 sensorManager.registerListener(this, SensorService.airSensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Air pressure Sensor Activated");
+                SharedPrefManager.setAirSensor(true);
             } else if (!switchAir.isChecked()) {
                 sensorManager.unregisterListener(this, SensorService.airSensor);
                 Log.d("Sensor data ", "Air pressure Sensor Deactivated");
+                SharedPrefManager.setAirSensor(false);
             }
         });
-
+    }
+    private void handleAirPressureSensitivity(){
+        int sensitivity = airPressureSensitivity.getProgress();
+        Log.d("Sensor Data", "Pressure sensitivity changed: " + sensitivity);
+    }
+    private void handleFahrenheitSwitch(){
+        switchFahren.toggle();
+        switchFahren.setOnClickListener(view -> SharedPrefManager.setFahrenheitEnabled(switchFahren.isChecked()));
     }
 
     private void handleHumidSensorClick() {
@@ -114,9 +147,11 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
             if (switchHumid.isChecked()) {
                 sensorManager.registerListener(this, SensorService.humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Humidity Sensor Activated");
+                SharedPrefManager.setHumiditySensor(true);
             } else if (!switchHumid.isChecked()) {
                 sensorManager.unregisterListener(this, SensorService.humiditySensor);
                 Log.d("Sensor data ", "Humidity Sensor Deactivated");
+                SharedPrefManager.setHumiditySensor(false);
             }
         });
     }
@@ -154,12 +189,20 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         mainLayout = findViewById(R.id.sensorSettings);
         footerTab = findViewById(R.id.footerTab);
+        airPressureSensitivity = findViewById(R.id.airPressureSensitivity);
+        switchFahren = findViewById(R.id.tempFahrenheitEnabled);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
             float temp = sensorEvent.values[0];
+
+            // If fahrenheit is enabled
+            if (SharedPrefManager.isFahreheitEnabled() || switchFahren.isChecked()){
+                temp = (temp * 9/5) + 32;
+            }
+
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
             Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_TEMP");
             broadcastIntent.putExtra("temperatureData", String.valueOf(temp));

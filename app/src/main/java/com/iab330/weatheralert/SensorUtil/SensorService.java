@@ -22,6 +22,7 @@ import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.MainActivity;
 import com.iab330.weatheralert.Utils.MyApp;
+import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.util.Arrays;
 
@@ -67,15 +68,17 @@ public class SensorService extends Service implements SensorEventListener {
 
 //        if (tempSensor != null){
 //            sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
-////            SharedPrefManager.setTempSensor(true);
+//            SharedPrefManager.setTempSensor(true);
 //        }
-
+//
 //        if (humiditySensor != null){
 //            sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
+//            SharedPrefManager.setHumiditySensor(true);
 //        }
-
+//
 //        if (airSensor != null) {
 //            sensorManager.registerListener(this, airSensor, SensorManager.SENSOR_DELAY_NORMAL);
+//            SharedPrefManager.setAirSensor(true);
 //        }
         return START_STICKY;
     }
@@ -125,7 +128,4 @@ public class SensorService extends Service implements SensorEventListener {
 
     }
 
-//    public class displayData extends AppCompatActivity {
-//
-//    }
 }

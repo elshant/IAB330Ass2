@@ -8,6 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +21,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iab330.weatheralert.DB.AirPressureDao;
+import com.iab330.weatheralert.DB.AirPressureData;
+import com.iab330.weatheralert.DB.HumidityDao;
+import com.iab330.weatheralert.DB.HumidityData;
+import com.iab330.weatheralert.DB.TemperatureDao;
+import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
+import com.iab330.weatheralert.Utils.MyApp;
 import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.util.Calendar;
@@ -37,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView tempImg;
     ImageView humidImg;
     ImageView airImg;
+    private float prevAirPressure = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Received Temperature", "Received" + temperatureData);
 
                 if (SharedPrefManager.isTempDisplayed()){
-                    temperature.setText(temperatureData + "°C");
+                    if (SharedPrefManager.isFahreheitEnabled()){
+                        temperature.setText(temperatureData + "°F");
+                    }
+                    else{
+                        temperature.setText(temperatureData + "°C");
+                    }
                 }
                 else{
                     tempImg.setVisibility(ImageView.GONE);
