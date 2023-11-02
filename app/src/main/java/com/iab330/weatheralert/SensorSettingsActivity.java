@@ -182,7 +182,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         btnSetting = findViewById(R.id.settingsBtn);
         btnAlert = findViewById(R.id.alertBtn);
 
-
         switchAir = findViewById(R.id.airPressureEnabled);
         switchTemp = findViewById(R.id.temperatureEnabled);
         switchHumid = findViewById(R.id.humidityEnabled);
@@ -242,6 +241,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
+
 }

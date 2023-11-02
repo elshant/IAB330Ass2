@@ -100,8 +100,6 @@ public class SensorService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-        Log.d("cheese?", "Cheese.");
         if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             float temp = sensorEvent.values[0];
             TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
