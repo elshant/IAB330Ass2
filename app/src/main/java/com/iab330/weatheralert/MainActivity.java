@@ -30,6 +30,7 @@ import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 import com.iab330.weatheralert.Utils.MyApp;
 import com.iab330.weatheralert.Utils.SharedPrefManager;
+import com.iab330.weatheralert.SensorSettingsActivity;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -63,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
         handleHomeClick();
         handleDataClick();
         manageSensorService();
-
         handleSensorDisplay();
+        handleSensorEnabled();
+
+        //getLatestTemperatureData();
+
     }
 
     private class SensorDataReceiver extends BroadcastReceiver {
@@ -267,6 +271,33 @@ public class MainActivity extends AppCompatActivity {
             airPressure.setVisibility(TextView.GONE);
         }
     }
+    private void handleSensorEnabled() {
+        if (SharedPrefManager.isTempEnabled()){
+            senseOnce("temp");
+        }
+        else{
+            temperature.setText("N/A");
+        }
+
+        if (SharedPrefManager.isAirEnabled()){
+            senseOnce("air");
+        }
+        else{
+            airPressure.setText("N/A");
+        }
+
+        if (SharedPrefManager.isHumidityEnabled()){
+            senseOnce("humidity");
+        }
+        else{
+            humidity.setText("N/A");
+        }
+    }
+
+    private void senseOnce(String sensorType) {
+
+    }
+
     private void setViewIds(){
         btnHome = findViewById(R.id.homeBtn);
         btnSetting = findViewById(R.id.settingsBtn);
@@ -282,4 +313,5 @@ public class MainActivity extends AppCompatActivity {
         humidImg = findViewById(R.id.humidImg);
         airImg = findViewById(R.id.airImg);
     }
+
 }
