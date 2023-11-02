@@ -30,7 +30,6 @@ import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 import com.iab330.weatheralert.Utils.MyApp;
 import com.iab330.weatheralert.Utils.SharedPrefManager;
-import com.iab330.weatheralert.SensorSettingsActivity;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -66,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
         manageSensorService();
         handleSensorDisplay();
         handleSensorEnabled();
-
-        //getLatestTemperatureData();
-
     }
 
     private class SensorDataReceiver extends BroadcastReceiver {
@@ -272,30 +268,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void handleSensorEnabled() {
-        if (SharedPrefManager.isTempEnabled()){
-            senseOnce("temp");
-        }
-        else{
+        if (!SharedPrefManager.isTempEnabled()){
             temperature.setText("N/A");
         }
-
-        if (SharedPrefManager.isAirEnabled()){
-            senseOnce("air");
-        }
-        else{
+        if (!SharedPrefManager.isAirEnabled()){
             airPressure.setText("N/A");
         }
-
-        if (SharedPrefManager.isHumidityEnabled()){
-            senseOnce("humidity");
-        }
-        else{
+        if (!SharedPrefManager.isHumidityEnabled()){
             humidity.setText("N/A");
         }
-    }
-
-    private void senseOnce(String sensorType) {
-
     }
 
     private void setViewIds(){

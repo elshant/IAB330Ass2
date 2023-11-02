@@ -33,7 +33,7 @@ import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 
 
-public class SensorSettingsActivity extends AppCompatActivity implements SensorEventListener {
+public class SensorSettingsActivity extends AppCompatActivity {
 
     private ImageButton btnHome;
     private ImageButton btnAlert;
@@ -69,8 +69,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         handleSettingClick();
         handleHomeClick();
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
         handleTempSensorClick();
         handleFahrenheitSwitch();
         handleAirSensorClick();
@@ -78,7 +76,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         if (SharedPrefManager.isTempEnabled()){
             switchTemp.setChecked(true);
-            sensorManager.registerListener(this, SensorService.tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         else{
             switchTemp.setChecked(false);
@@ -86,7 +83,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         if (SharedPrefManager.isAirEnabled()){
             switchAir.setChecked(true);
-            sensorManager.registerListener(this, SensorService.airSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         else{
             switchAir.setChecked(false);
@@ -94,7 +90,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
 
         if (SharedPrefManager.isHumidityEnabled()){
             switchHumid.setChecked(true);
-            sensorManager.registerListener(this, SensorService.humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         else{
             switchHumid.setChecked(false);
@@ -105,11 +100,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         switchTemp.toggle();
         switchTemp.setOnClickListener(view -> {
             if (switchTemp.isChecked()) {
-                sensorManager.registerListener(this, SensorService.tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Temperature Sensor Activated");
                 SharedPrefManager.setTempSensor(true);
             } else if (!switchTemp.isChecked()) {
-                sensorManager.unregisterListener(this, SensorService.tempSensor);
                 Log.d("Sensor data ", "Temperature Sensor Deactivated");
                 SharedPrefManager.setTempSensor(false);
             }
@@ -122,11 +115,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         switchAir.toggle();
         switchAir.setOnClickListener(view -> {
             if (switchAir.isChecked()) {
-                sensorManager.registerListener(this, SensorService.airSensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Air pressure Sensor Activated");
                 SharedPrefManager.setAirSensor(true);
             } else if (!switchAir.isChecked()) {
-                sensorManager.unregisterListener(this, SensorService.airSensor);
                 Log.d("Sensor data ", "Air pressure Sensor Deactivated");
                 SharedPrefManager.setAirSensor(false);
             }
@@ -145,11 +136,9 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         switchHumid.toggle();
         switchHumid.setOnClickListener(view -> {
             if (switchHumid.isChecked()) {
-                sensorManager.registerListener(this, SensorService.humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("Sensor data ", "Humidity Sensor Activated");
                 SharedPrefManager.setHumiditySensor(true);
             } else if (!switchHumid.isChecked()) {
-                sensorManager.unregisterListener(this, SensorService.humiditySensor);
                 Log.d("Sensor data ", "Humidity Sensor Deactivated");
                 SharedPrefManager.setHumiditySensor(false);
             }
@@ -190,57 +179,6 @@ public class SensorSettingsActivity extends AppCompatActivity implements SensorE
         footerTab = findViewById(R.id.footerTab);
         airPressureSensitivity = findViewById(R.id.airPressureSensitivity);
         switchFahren = findViewById(R.id.tempFahrenheitEnabled);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
-            float temp = sensorEvent.values[0];
-
-            // If fahrenheit is enabled
-            if (SharedPrefManager.isFahreheitEnabled() || switchFahren.isChecked()){
-                temp = (temp * 9/5) + 32;
-            }
-
-            TemperatureData temperatureData = new TemperatureData(temp, sensorEvent.timestamp);
-            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_TEMP");
-            broadcastIntent.putExtra("temperatureData", String.valueOf(temp));
-            sendBroadcast(broadcastIntent);
-
-
-            TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
-            AsyncTask.execute(() -> temperatureDao.insertTemperature(temperatureData));
-        }
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
-            float airPressure = sensorEvent.values[0];
-            if (airPressure != prevAirPressure) {
-                AirPressureData airPressureData = new AirPressureData(airPressure, sensorEvent.timestamp);
-                Log.d("Sensed - pressure ", "true");
-                Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_AIR_PRESSURE");
-                broadcastIntent.putExtra("airPressureData", String.valueOf(airPressure));
-                sendBroadcast(broadcastIntent);
-
-                AirPressureDao airPressureDao = MyApp.getAppDatabase().airPressureDao();
-                AsyncTask.execute(() -> airPressureDao.insertAirPressure(airPressureData));
-                prevAirPressure = airPressure;
-            }
-        }
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY) {
-            float humid = sensorEvent.values[0];
-            HumidityData humidityData = new HumidityData(humid, sensorEvent.timestamp);
-            Intent broadcastIntent = new Intent("WEATHER_SENSOR_DATA_HUMIDITY");
-            broadcastIntent.putExtra("humidityData", String.valueOf(humid));
-            sendBroadcast(broadcastIntent);
-
-            HumidityDao humidityDao = MyApp.getAppDatabase().humidityDao();
-            AsyncTask.execute(() -> humidityDao.insertHumidity(humidityData));
-        }
-
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
     }
 
 }

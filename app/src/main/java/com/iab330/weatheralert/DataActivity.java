@@ -47,7 +47,7 @@ public class DataActivity extends AppCompatActivity {
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();
-        //analyseTemperatureData();
+        analyseTemperatureData();
     }
 
     private void handleHomeClick(){
@@ -99,11 +99,11 @@ public class DataActivity extends AppCompatActivity {
         tempLineChart.legend().padding(0d, 0d, 10d, 0d);
 
         List<DataEntry> seriesData = new ArrayList<>();
-        Set set = Set.instantiate(); // Initiating AnyChart set to synch the custom data with AnyChart data
-        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }"); // Map for mapping values in X-Axis (time) with Y-axix (temperature)
+        Set set = Set.instantiate();
+        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
 
         Line series1 = tempLineChart.line(series1Mapping);
-        //series1.name(tvVehicleName.getText().toString());
+        series1.name("Temperature Change");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
