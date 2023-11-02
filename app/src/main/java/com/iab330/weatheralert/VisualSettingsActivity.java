@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.iab330.weatheralert.Utils.SharedPrefManager;
 
@@ -68,22 +70,39 @@ public class VisualSettingsActivity extends AppCompatActivity {
         });
     }
     private void handleTempDisplay(){
-        tempDisplaySwitch.toggle();
         tempDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setTempDisplayed(tempDisplaySwitch.isChecked());
         });
+
+        if (SharedPrefManager.isTempDisplayed()){
+            tempDisplaySwitch.setChecked(true);
+        }
+        else{
+            tempDisplaySwitch.setChecked(false);
+        }
     }
     private void handleAirDisplay(){
-        pressureDisplaySwitch.toggle();
         pressureDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setAirDisplayed(pressureDisplaySwitch.isChecked());
         });
+        if (SharedPrefManager.isAirDisplayed()){
+            pressureDisplaySwitch.setChecked(true);
+        }
+        else{
+            pressureDisplaySwitch.setChecked(false);
+        }
     }
     private void handleHumidDisplay(){
-        humidDisplaySwitch.toggle();
         humidDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setHumidityDisplayed(humidDisplaySwitch.isChecked());
         });
+
+        if (SharedPrefManager.isHumidityDisplayed()){
+            humidDisplaySwitch.setChecked(true);
+        }
+        else{
+            humidDisplaySwitch.setChecked(false);
+        }
     }
 
     private void handleHomeClick(){

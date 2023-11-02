@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         handleHomeClick();
         handleDataClick();
         manageSensorService();
+
+        handleSensorDisplay();
     }
 
     private class SensorDataReceiver extends BroadcastReceiver {
@@ -235,6 +237,35 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsMenuActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void handleSensorDisplay() {
+        if (SharedPrefManager.isTempDisplayed()){
+            tempImg.setVisibility(ImageView.VISIBLE);
+            temperature.setVisibility(TextView.VISIBLE);
+        }
+        else{
+            tempImg.setVisibility(ImageView.GONE);
+            temperature.setVisibility(TextView.GONE);
+        }
+
+        if (SharedPrefManager.isHumidityDisplayed()){
+            humidImg.setVisibility(ImageView.VISIBLE);
+            humidity.setVisibility(TextView.VISIBLE);
+        }
+        else{
+            humidImg.setVisibility(ImageView.GONE);
+            humidity.setVisibility(TextView.GONE);
+        }
+
+        if (SharedPrefManager.isAirDisplayed()){
+            airImg.setVisibility(ImageView.VISIBLE);
+            airPressure.setVisibility(TextView.VISIBLE);
+        }
+        else{
+            airImg.setVisibility(ImageView.GONE);
+            airPressure.setVisibility(TextView.GONE);
+        }
     }
     private void setViewIds(){
         btnHome = findViewById(R.id.homeBtn);
