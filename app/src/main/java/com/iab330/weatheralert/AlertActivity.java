@@ -13,6 +13,8 @@ public class AlertActivity extends AppCompatActivity{
     private ImageButton btnSetting;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
