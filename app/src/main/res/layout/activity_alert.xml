@@ -72,9 +72,12 @@
 
                 <TextView
                     android:id="@+id/alertTitleTime"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
                     android:text="19:00 PM"
                     android:textColor="#373D3F"
                     android:textSize="23sp"
@@ -85,13 +88,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/descIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="-20dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/desc_icon"
                     android:contentDescription="Description Icon" />
 
@@ -100,9 +105,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
-                    android:text="Low Pressure Indicates a possible rainstorm"
+                    android:text="Low Pressure indicates a possible rainstorm"
                     android:textColor="#373D3F"
-                    android:textSize="23sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -110,12 +115,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/actionIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/action_required"
                     android:contentDescription="Action Icon" />
 
@@ -126,7 +133,7 @@
                     android:layout_marginEnd="7dp"
                     android:text="No action needed."
                     android:textColor="#373D3F"
-                    android:textSize="23sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
