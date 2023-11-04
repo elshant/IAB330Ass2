@@ -32,6 +32,8 @@ public class SharedPrefManager {
     private static final String KEY_DARKMODE_ENABLED = "isDarkModeEnabled";
     private static final String KEY_FAHRENHEIT_ENABLED = "isFahrenheitEnabled";
 
+    private static final String KEY_AIR_PRESSURE_SENSITIVITY = "currentAirPressureSensitivity";
+
     public static void setLoginState(boolean isLoggedIn){
         SharedPreferences.Editor editor = getSharedPreference().edit();
         // Saving login state
@@ -40,16 +42,9 @@ public class SharedPrefManager {
     }
 
     public static boolean isLoggedIn(){
-        boolean isLoggedIn = getSharedPreference().getBoolean(KEY_IS_LOGGED_IN, false);
-        return isLoggedIn;
+        return getSharedPreference().getBoolean(KEY_IS_LOGGED_IN, false);
     }
 
-    public static void setAdmin(boolean isAdmin){
-        SharedPreferences.Editor editor = getSharedPreference().edit();
-        // Saving login state
-        editor.putBoolean(KEY_USER_ROLE, true); // or false if not logged in
-        editor.apply();
-    }
 
     public static boolean isDarkModeEnabled(){
         return getSharedPreference().getBoolean(KEY_DARKMODE_ENABLED, false);
@@ -136,6 +131,17 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = getSharedPreference().edit();
 
         editor.putBoolean(KEY_FAHRENHEIT_ENABLED, isFahrenheitEnabled);
+        editor.apply();
+    }
+
+    public static float currentAirPressureSensitivity(){
+        return getSharedPreference().getFloat(KEY_AIR_PRESSURE_SENSITIVITY, 1000);
+    }
+
+    public static void setAirPressureSensitivity(float currentAirPressureSensitivity){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+
+        editor.putFloat(KEY_AIR_PRESSURE_SENSITIVITY, currentAirPressureSensitivity);
         editor.apply();
     }
 

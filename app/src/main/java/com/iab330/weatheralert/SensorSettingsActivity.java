@@ -45,8 +45,6 @@ public class SensorSettingsActivity extends AppCompatActivity {
     private SwitchCompat switchAir;
     private SwitchCompat switchHumid;
 
-    private SensorManager sensorManager;
-    private float prevAirPressure;
     private LinearLayout mainLayout;
     private FrameLayout footerTab;
 
@@ -74,26 +72,14 @@ public class SensorSettingsActivity extends AppCompatActivity {
         handleAirSensorClick();
         handleHumidSensorClick();
 
-        if (SharedPrefManager.isTempEnabled()){
-            switchTemp.setChecked(true);
-        }
-        else{
-            switchTemp.setChecked(false);
-        }
+        switchTemp.setChecked(SharedPrefManager.isTempEnabled());
 
-        if (SharedPrefManager.isAirEnabled()){
-            switchAir.setChecked(true);
-        }
-        else{
-            switchAir.setChecked(false);
-        }
+        switchAir.setChecked(SharedPrefManager.isAirEnabled());
 
-        if (SharedPrefManager.isHumidityEnabled()){
-            switchHumid.setChecked(true);
-        }
-        else{
-            switchHumid.setChecked(false);
-        }
+        switchHumid.setChecked(SharedPrefManager.isHumidityEnabled());
+
+        airPressureSensitivity.setProgress(((int) SharedPrefManager.currentAirPressureSensitivity()));
+        handleAirPressureSensitivity();
     }
 
     private void handleTempSensorClick() {
@@ -107,8 +93,6 @@ public class SensorSettingsActivity extends AppCompatActivity {
                 SharedPrefManager.setTempSensor(false);
             }
         });
-
-
     }
 
     private void handleAirSensorClick() {
@@ -123,9 +107,32 @@ public class SensorSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void handleAirPressureSensitivity(){
-        int sensitivity = airPressureSensitivity.getProgress();
-        Log.d("Sensor Data", "Pressure sensitivity changed: " + sensitivity);
+
+        airPressureSensitivity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.d("Testing sensitivity", "Sensitivity is: " + SharedPrefManager.currentAirPressureSensitivity());
+                airPressureSensitivity.setMax(300);
+                airPressureSensitivity.setMin(0);
+
+                int int_airpressure = 1000 - airPressureSensitivity.getProgress();
+                float sensitivity = ((float) int_airpressure);
+                SharedPrefManager.setAirPressureSensitivity(sensitivity);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
     private void handleFahrenheitSwitch(){
         switchFahren.toggle();

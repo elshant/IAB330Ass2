@@ -17,6 +17,7 @@ import com.iab330.weatheralert.DB.AirPressureData;
 import com.iab330.weatheralert.DB.HumidityData;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.Utils.MyApp;
+import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class AlertActivity extends AppCompatActivity{
     private ImageButton btnSetting;
     private final float TEMPERATURE_THRESHOLD = 30.0f;
     private final float HUMIDITY_THRESHOLD = 80.0f;
-    private final float AIR_PRESSURE_THRESHOLD = 1000f;
+    private final float AIR_PRESSURE_THRESHOLD = SharedPrefManager.currentAirPressureSensitivity();
     private TextView alertTitleText, alertDescText, alertTitleTime, alertActionText;
 
     private ImageView noDataIcon1, noDataIcon2;
@@ -141,9 +142,9 @@ public class AlertActivity extends AppCompatActivity{
         airPressureLiveData.observe(this, airPressureDataList -> {
 //            boolean hasData = false;
             for (AirPressureData airPressureData : airPressureDataList) {
-                if (airPressureData.getAirPressure() > AIR_PRESSURE_THRESHOLD) {
+                if (airPressureData.getAirPressure() < AIR_PRESSURE_THRESHOLD) {
                     hasAnyAlert = true;
-                    alertTitleText.setText("High Air Pressure Alert");
+                    alertTitleText.setText("Low Air Pressure Alert");
                     alertDescText.setText("Air pressure has reached: " + airPressureData.getAirPressure() + " hPa");
                     alertActionText.setText("Stay informed and watch for other weather conditions.");
                     alertTitleTime.setText(getCurrentFormattedTime());
