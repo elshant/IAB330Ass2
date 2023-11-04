@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +26,9 @@ import java.util.List;
 
 
 public class AlertActivity extends AppCompatActivity{
+
+
+
     private ImageButton btnHome;
     private ImageButton btnAlert;
     private ImageButton btnSetting;
@@ -38,11 +44,24 @@ public class AlertActivity extends AppCompatActivity{
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
         setViewIds();
+        LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        FrameLayout footerTab = findViewById(R.id.footerTab);
+
+        if (SharedPrefManager.isDarkModeEnabled()) {
+            mainLayout.setBackgroundColor(Color.DKGRAY);
+            footerTab.setBackgroundColor(Color.GRAY);
+        }
+        else {
+            mainLayout.setBackgroundColor(Color.WHITE);
+            footerTab.setBackgroundColor(Color.DKGRAY);
+        }
+
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();
@@ -99,69 +118,61 @@ public class AlertActivity extends AppCompatActivity{
         }
     }
 
-    private void checkTemperatureAlert() { // fetches data from database and based on threshold defined above gives alerts
-        LiveData<List<TemperatureData>> temperatureLiveData = MyApp.getAppDatabase().temperatureDao().getAllTemperatureData();
-        temperatureLiveData.observe(this, temperatureDataList -> {
-//            boolean hasData = false;
-            for (TemperatureData temperatureData : temperatureDataList) {
-                if (temperatureData.getTemp() > TEMPERATURE_THRESHOLD) {
-                    hasAnyAlert = true;
-                    // Update the UI components with alert details
-                    alertTitleText.setText("High Temperature Alert");
-                    alertDescText.setText("Temperature has reached: " + temperatureData.getTemp() + "°C");
-                    alertActionText.setText("Consider staying indoors.");
-                    // Assuming you have a method to get the time
-                    alertTitleTime.setText(getCurrentFormattedTime());
-                }
+    private void checkTemperatureAlert() {
+        LiveData<TemperatureData> temperatureLiveData = MyApp.getAppDatabase().temperatureDao().getLatestTemperatureData();
+
+        temperatureLiveData.observe(this, temperatureData -> {
+            if (temperatureData != null && temperatureData.getTemp() > TEMPERATURE_THRESHOLD) {
+                hasAnyAlert = true;
+                alertTitleText.setText("High Temperature Alert");
+                alertDescText.setText("Temperature has reached: " + temperatureData.getTemp() + "°C");
+                alertActionText.setText("Consider staying indoors.");
+                alertTitleTime.setText(getFormattedTime(temperatureData.getTimeStamp()));
             }
             refreshNoDataUI();
-
         });
-
     }
+
     private void checkHumidityAlert() {
-        LiveData<List<HumidityData>> humidityLiveData = MyApp.getAppDatabase().humidityDao().getAllHumidityData();
-        humidityLiveData.observe(this, humidityDataList -> {
-//            boolean hasData = false;
-            for (HumidityData humidityData : humidityDataList) {
-                if (humidityData.getHumid() > HUMIDITY_THRESHOLD) {
-                    hasAnyAlert = true;
-                    alertTitleText.setText("High Humidity Alert");
-                    alertDescText.setText("Humidity level has reached: " + humidityData.getHumid() + "%");
-                    alertActionText.setText("Consider using a dehumidifier.");
-                    alertTitleTime.setText(getCurrentFormattedTime());
-                }
+        LiveData<HumidityData> humidityLiveData = MyApp.getAppDatabase().humidityDao().getLatestHumidityData();
+
+        humidityLiveData.observe(this, humidityData -> {
+            if (humidityData != null && humidityData.getHumid() > HUMIDITY_THRESHOLD) {
+                hasAnyAlert = true;
+                alertTitleText.setText("High Humidity Alert");
+                alertDescText.setText("Humidity level has reached: " + humidityData.getHumid() + "%");
+                alertActionText.setText("Consider using a dehumidifier.");
+                alertTitleTime.setText(getFormattedTime(humidityData.getTimeStamp()));
             }
             refreshNoDataUI();
-
         });
     }
 
     private void checkAirPressureAlert() {
-        LiveData<List<AirPressureData>> airPressureLiveData = MyApp.getAppDatabase().airPressureDao().getAllAirPressureData();
-        airPressureLiveData.observe(this, airPressureDataList -> {
-//            boolean hasData = false;
-            for (AirPressureData airPressureData : airPressureDataList) {
-                if (airPressureData.getAirPressure() < AIR_PRESSURE_THRESHOLD) {
-                    hasAnyAlert = true;
-                    alertTitleText.setText("Low Air Pressure Alert");
-                    alertDescText.setText("Air pressure has reached: " + airPressureData.getAirPressure() + " hPa");
-                    alertActionText.setText("Stay informed and watch for other weather conditions.");
-                    alertTitleTime.setText(getCurrentFormattedTime());
-                }
+        LiveData<AirPressureData> airPressureLiveData = MyApp.getAppDatabase().airPressureDao().getLatestAirPressureData();
+
+        airPressureLiveData.observe(this, airPressureData -> {
+            if (airPressureData != null && airPressureData.getAirPressure() < AIR_PRESSURE_THRESHOLD) {
+                hasAnyAlert = true;
+                alertTitleText.setText("Low Air Pressure Alert");
+                alertDescText.setText("Air pressure has reached: " + airPressureData.getAirPressure() + " hPa");
+                alertActionText.setText("Stay informed and watch for other weather conditions.");
+                alertTitleTime.setText(getFormattedTime(airPressureData.getTimeStamp()));
             }
             refreshNoDataUI();
-
         });
     }
+
     private void refreshNoDataUI() {
+
         displayNoDataForEmergencyAlerts(!hasAnyAlert);
     }
 
-    private String getCurrentFormattedTime() { // method for time (returns current time)
-        Date now = new Date();
+    private String getFormattedTime(long timestamp) {
+        Date date = new Date(timestamp);
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-        return sdf.format(now);
+        return sdf.format(date);
     }
+
 
 }

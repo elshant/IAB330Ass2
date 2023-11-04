@@ -20,4 +20,8 @@ public interface TemperatureDao {
     @Query("DELETE FROM temperatureData")
     void deleteAllTemperatureData();
 
+    // this is for alerts section to only get the latest data
+    @Query("SELECT * FROM temperatureData ORDER BY timeStamp DESC LIMIT 1")
+    LiveData<TemperatureData> getLatestTemperatureData();
+
 }

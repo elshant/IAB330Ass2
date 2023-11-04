@@ -18,5 +18,8 @@ public interface AirPressureDao {
 
     @Query("DELETE FROM airPressureData")
     void deleteAllAirPressureData();
+    @Query("SELECT * FROM airPressureData ORDER BY timeStamp DESC LIMIT 1")
+    LiveData<AirPressureData> getLatestAirPressureData();
+
 
 }

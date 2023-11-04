@@ -18,5 +18,7 @@ public interface HumidityDao {
 
     @Query("DELETE FROM humidityData")
     void deleteAllHumidityData();
+    @Query("SELECT * FROM humidityData ORDER BY timeStamp DESC LIMIT 1")
+    LiveData<HumidityData> getLatestHumidityData();
 
 }

@@ -7,9 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.anychart.AnyChart;
@@ -28,6 +31,7 @@ import com.iab330.weatheralert.DB.TemperatureDao;
 import com.iab330.weatheralert.DB.TemperatureData;
 import com.iab330.weatheralert.SensorUtil.SensorService;
 import com.iab330.weatheralert.Utils.MyApp;
+import com.iab330.weatheralert.Utils.SharedPrefManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +52,17 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
         setViewIds();
+        LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        FrameLayout footerTab = findViewById(R.id.footerTab);
+
+        if (SharedPrefManager.isDarkModeEnabled()) {
+            mainLayout.setBackgroundColor(Color.DKGRAY);
+            footerTab.setBackgroundColor(Color.GRAY);
+        }
+        else {
+            mainLayout.setBackgroundColor(Color.WHITE);
+            footerTab.setBackgroundColor(Color.DKGRAY);
+        }
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();
