@@ -30,6 +30,8 @@ public class SharedPrefManager {
 
     // Supplementary preferences like Dark mode and fahrenheit
     private static final String KEY_DARKMODE_ENABLED = "isDarkModeEnabled";
+
+    private static final String KEY_DYNAMIC_HOME_ENABLED = "isDynamicHomeEnabled";
     private static final String KEY_FAHRENHEIT_ENABLED = "isFahrenheitEnabled";
 
     private static final String KEY_AIR_PRESSURE_SENSITIVITY = "currentAirPressureSensitivity";
@@ -57,6 +59,16 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    public static boolean isDynamicHomeEnabled(){
+        return getSharedPreference().getBoolean(KEY_DYNAMIC_HOME_ENABLED, false);
+    }
+
+    public static void setDynamicHome(boolean isDynamicHomeEnabled){
+        SharedPreferences.Editor editor = getSharedPreference().edit();
+        // Saving Dark mode
+        editor.putBoolean(KEY_DYNAMIC_HOME_ENABLED, isDynamicHomeEnabled);
+        editor.apply();
+    }
 
     public static boolean isAirEnabled(){
         return getSharedPreference().getBoolean(KEY_AIR_PRESSURE_ENABLED, false);

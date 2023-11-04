@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setViewIds();
-        handleBackgroundChange();
+
+        if(SharedPrefManager.isDynamicHomeEnabled()) {
+            handleBackgroundChange();
+        } else {
+            mainLayout.setBackgroundResource(R.drawable.background_5);
+            setColour("Midday");
+        }
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();

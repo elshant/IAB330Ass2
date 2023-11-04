@@ -26,6 +26,8 @@ public class VisualSettingsActivity extends AppCompatActivity {
     private SwitchCompat tempDisplaySwitch;
     private SwitchCompat pressureDisplaySwitch;
     private SwitchCompat humidDisplaySwitch;
+
+    private SwitchCompat dynamicHomeSwitch;
     private LinearLayout mainLayout;
     private FrameLayout footerTab;
 
@@ -49,6 +51,7 @@ public class VisualSettingsActivity extends AppCompatActivity {
         }
 
         handleDarkMode();
+        handleDynamicHome();
         handleTempDisplay();
         handleAirDisplay();
         handleHumidDisplay();
@@ -69,6 +72,19 @@ public class VisualSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void handleDynamicHome(){
+        dynamicHomeSwitch.setOnClickListener(view -> {
+            SharedPrefManager.setDynamicHome(dynamicHomeSwitch.isChecked());
+        });
+        if (SharedPrefManager.isDynamicHomeEnabled()){
+            dynamicHomeSwitch.setChecked(true);
+        }
+        else{
+            dynamicHomeSwitch.setChecked(false);
+        }
+    }
+
     private void handleTempDisplay(){
         tempDisplaySwitch.setOnClickListener(view -> {
             SharedPrefManager.setTempDisplayed(tempDisplaySwitch.isChecked());
@@ -129,6 +145,7 @@ public class VisualSettingsActivity extends AppCompatActivity {
         btnAlert = findViewById(R.id.alertBtn);
 
         darkmodeSwitch = findViewById(R.id.darkModeEnabled);
+        dynamicHomeSwitch = findViewById(R.id.dynamicWallpaperEnabled);
         tempDisplaySwitch = findViewById(R.id.temperatureDisplayEnabled);
         pressureDisplaySwitch = findViewById(R.id.airPressureDisplayEnabled);
         humidDisplaySwitch = findViewById(R.id.humidityDisplayEnabled);
