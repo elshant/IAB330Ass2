@@ -29,9 +29,11 @@ public class AlertActivity extends AppCompatActivity{
     private final float HUMIDITY_THRESHOLD = 80.0f;
     private final float AIR_PRESSURE_THRESHOLD = 1000f;
     private TextView alertTitleText, alertDescText, alertTitleTime, alertActionText;
-    private ImageView noDataIcon1;
-    private TextView noDataText1;
 
+    private ImageView noDataIcon1, noDataIcon2;
+    private TextView noDataText1, noDataText2;
+
+    private boolean hasAnyAlert = false;
 
 
 
@@ -43,16 +45,18 @@ public class AlertActivity extends AppCompatActivity{
         handleAlertClick();
         handleSettingClick();
         handleHomeClick();
-        displayNoDataForEmergencyAlerts(true);
+        displayNoDataForEmergencyAlerts(!hasAnyAlert); // To show no data when there is no data passed
 //Will fetch data from database
         checkTemperatureAlert();
         checkHumidityAlert();
         checkAirPressureAlert();
+        noDataIcon1 = findViewById(R.id.noDataIcon1);
+        noDataIcon2 = findViewById(R.id.noDataIcon2);
+        noDataText1 = findViewById(R.id.noDataText1);
+        noDataText2 = findViewById(R.id.noDataText2);
+
 
     }
-
-
-
     private void handleHomeClick(){
         btnHome.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
@@ -97,10 +101,10 @@ public class AlertActivity extends AppCompatActivity{
     private void checkTemperatureAlert() { // fetches data from database and based on threshold defined above gives alerts
         LiveData<List<TemperatureData>> temperatureLiveData = MyApp.getAppDatabase().temperatureDao().getAllTemperatureData();
         temperatureLiveData.observe(this, temperatureDataList -> {
-            boolean hasData = false;
+//            boolean hasData = false;
             for (TemperatureData temperatureData : temperatureDataList) {
                 if (temperatureData.getTemp() > TEMPERATURE_THRESHOLD) {
-                    hasData = true;
+                    hasAnyAlert = true;
                     // Update the UI components with alert details
                     alertTitleText.setText("High Temperature Alert");
                     alertDescText.setText("Temperature has reached: " + temperatureData.getTemp() + "°C");
@@ -109,41 +113,48 @@ public class AlertActivity extends AppCompatActivity{
                     alertTitleTime.setText(getCurrentFormattedTime());
                 }
             }
-            displayNoDataForEmergencyAlerts(!hasData);
+            refreshNoDataUI();
+
         });
+
     }
     private void checkHumidityAlert() {
         LiveData<List<HumidityData>> humidityLiveData = MyApp.getAppDatabase().humidityDao().getAllHumidityData();
         humidityLiveData.observe(this, humidityDataList -> {
-            boolean hasData = false;
+//            boolean hasData = false;
             for (HumidityData humidityData : humidityDataList) {
                 if (humidityData.getHumid() > HUMIDITY_THRESHOLD) {
-                    hasData = true;
+                    hasAnyAlert = true;
                     alertTitleText.setText("High Humidity Alert");
                     alertDescText.setText("Humidity level has reached: " + humidityData.getHumid() + "%");
                     alertActionText.setText("Consider using a dehumidifier.");
                     alertTitleTime.setText(getCurrentFormattedTime());
                 }
             }
-            displayNoDataForEmergencyAlerts(!hasData);
+            refreshNoDataUI();
+
         });
     }
 
     private void checkAirPressureAlert() {
         LiveData<List<AirPressureData>> airPressureLiveData = MyApp.getAppDatabase().airPressureDao().getAllAirPressureData();
         airPressureLiveData.observe(this, airPressureDataList -> {
-            boolean hasData = false;
+//            boolean hasData = false;
             for (AirPressureData airPressureData : airPressureDataList) {
                 if (airPressureData.getAirPressure() > AIR_PRESSURE_THRESHOLD) {
-                    hasData = true;
+                    hasAnyAlert = true;
                     alertTitleText.setText("High Air Pressure Alert");
                     alertDescText.setText("Air pressure has reached: " + airPressureData.getAirPressure() + " hPa");
                     alertActionText.setText("Stay informed and watch for other weather conditions.");
                     alertTitleTime.setText(getCurrentFormattedTime());
                 }
             }
-            displayNoDataForEmergencyAlerts(!hasData);
+            refreshNoDataUI();
+
         });
+    }
+    private void refreshNoDataUI() {
+        displayNoDataForEmergencyAlerts(!hasAnyAlert);
     }
 
     private String getCurrentFormattedTime() { // method for time (returns current time)
